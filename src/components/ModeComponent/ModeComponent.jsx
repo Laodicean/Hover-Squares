@@ -1,16 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, InputLabel, MenuItem, FormControl, Select } from "@mui/material";
 import { connect } from "react-redux";
 import { setMode } from "../../redux/actions";
 
 const ModeComponent = ({ modes, setMode, currentMode }) => {
 
-  const modeHandler = (event) => {
-    const currentMode = {
-      cellsNum: event.target.value,
-    }
-    currentMode && setMode(currentMode);
-  };
+  const modeHandler = (event) => 
+    event.target.value && setMode({cellsNum: event.target.value});
 
   return (
     <Box sx={{ minWidth: 120 }}>
