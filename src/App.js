@@ -1,4 +1,4 @@
-import { SquareApp } from "./components/SquareApp";
+import SquareApp from './components/SquareApp'
 
 function App() {
   return (

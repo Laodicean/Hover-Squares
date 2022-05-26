@@ -1,21 +1,21 @@
 import React from "react";
-import { Square } from "../Square/Square";
+import Square from "../Square/Square";
 import styles from "./SquareGrid.module.css";
-const cols = 5;
-const rows = 5;
+import { connect } from "react-redux";
+const GRID_WIDTH = 500;
 
 
-
-const SquareGrid = ({ handleMouseOver, CalculateRowsAndCols }) => {
-  const squareArray = Array.from(Array(cols * rows), () => ({ value: 0 }));
+const SquareGrid = ({ handleMouseOver, CalculateRowsAndCols, mode }) => {
+  const squareArray = Array.from(Array(mode.field * mode.field), () => ({ value: 0 }));
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} style={{width:GRID_WIDTH}}>
       {squareArray.map((squareEl, i) => (
         <Square
           key={i}
           index={i}
-          {...CalculateRowsAndCols(i, cols)}
+          cellSize={(GRID_WIDTH / mode.field)}
+          {...CalculateRowsAndCols(i, mode.field)}
           handleMouseOver={handleMouseOver}
         />
       ))}
@@ -23,4 +23,9 @@ const SquareGrid = ({ handleMouseOver, CalculateRowsAndCols }) => {
   );
 };
 
-export { SquareGrid };
+const mapStateToProps = (state) => ({
+  mode: state.app.mode,
+});
+
+
+export default connect(mapStateToProps, null)(SquareGrid);

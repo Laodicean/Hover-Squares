@@ -1,3 +1,4 @@
-import { SquareGrid } from "./SquareGrid";
+import SquareGrid from "./SquareGrid";
 
 export default SquareGrid;
+

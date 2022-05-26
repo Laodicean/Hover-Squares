@@ -1,1 +1,5 @@
-export { SquareApp } from "./SquareApp";
+import SquareApp from "./SquareApp";
+
+export default SquareApp;
+
+

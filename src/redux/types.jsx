@@ -1,0 +1,3 @@
+export const SET_MODES = 'MODES/SET_MODES'
+export const SET_CURRENT_MODE = 'MODES/SET_CURRENT_MODE'
+

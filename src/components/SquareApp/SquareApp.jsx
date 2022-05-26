@@ -4,24 +4,25 @@ import DisplayHoverSquares from "../DisplayHoverSquares";
 import ModeComponent from "../ModeComponent";
 import SquareGrid from "../SquareGrid";
 import { Button, Grid } from "@mui/material";
-
+import { connect } from "react-redux";
+import { setModes } from "../../redux/actions";
 import styles from "./SquareApp.module.css";
 
 const CalculateRowsAndCols = (index, colsQuantity) => ({
   curRow: Math.floor(index / colsQuantity + 1),
-  curCol: (index % 5) + 1,
+  curCol: (index % colsQuantity) + 1,
 });
-const cols = 5;
 
-const SquareApp = () => {
-  const [modes, setModes] = useState([]);
+
+const SquareApp = ({setModes, mode}) => {
+
   const [activeSquares, setActiveSquares] = useState([]);
 
   const handleMouseOver = (i) => (e) => {
     e.target.classList.toggle(styles.active);
 
     setActiveSquares(
-      [...activeSquares, CalculateRowsAndCols(i, cols)].reduce((acc, cur) => {
+      [...activeSquares, CalculateRowsAndCols(i, mode.field)].reduce((acc, cur) => {
         const ind = acc.findIndex(
           (el) => el.curRow === cur.curRow && el.curCol === cur.curCol
         );
@@ -44,12 +45,12 @@ const SquareApp = () => {
       .then((data) => {
         setModes(data);
       });
-  }, []);
+  }, [setModes]);
 
   return (
     <Grid container spacing={2} className={styles.wrapper}>
       <Grid item xs={10}>
-        <ModeComponent modes={modes} />
+        <ModeComponent />
       </Grid>
       <Grid item xs={2}>
         <Button variant="contained">
@@ -69,4 +70,18 @@ const SquareApp = () => {
   );
 };
 
-export { SquareApp };
+
+const mapStateToProps = (state) => ({
+  modes: state.app.modes,
+  mode: state.app.mode
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setModes: (modes) => {
+      dispatch(setModes(modes));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SquareApp);

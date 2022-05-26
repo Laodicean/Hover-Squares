@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 import { Box, InputLabel, MenuItem, FormControl, Select } from "@mui/material";
+import { connect } from "react-redux";
+import { setMode } from "../../redux/actions";
 
-const ModeComponent = ({ modes, updateFieldsQuantity }) => {
+const ModeComponent = ({ modes, setMode }) => {
   const [gameMode, setGameMode] = useState("");
   const modeHandler = (event) => {
-    event.target.value && setGameMode(event.target.value);
+    const modeObj = event.target.value;
+    modeObj && setGameMode(modeObj);
+    const currentMode = {
+      name: modeObj.name,
+      field: modeObj.field,
+    };
+    setMode(currentMode);
   };
 
   return (
@@ -29,4 +37,16 @@ const ModeComponent = ({ modes, updateFieldsQuantity }) => {
   );
 };
 
-export { ModeComponent };
+const mapStateToProps = (state) => ({
+  modes: state.app.modes,
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setMode: (mode) => {
+      dispatch(setMode(mode));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ModeComponent);

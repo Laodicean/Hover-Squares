@@ -1,3 +1,5 @@
-import { ModeComponent } from "./ModeComponent";
+import ModeComponent from "./ModeComponent";
 
 export default ModeComponent;
+
+

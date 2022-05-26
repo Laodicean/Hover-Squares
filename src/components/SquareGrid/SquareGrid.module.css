@@ -1,10 +1,9 @@
 .active {
-    background-color: cornflowerblue;
+  background-color: cornflowerblue;
 }
 
 .wrapper {
-    background-color:cornsilk;
-    display: flex;
-    flex-wrap: wrap;
-    width:500px;
+  background-color: antiquewhite;
+  display: flex;
+  flex-wrap: wrap;
 }
