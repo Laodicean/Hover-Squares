@@ -3,16 +3,13 @@ import { Box, InputLabel, MenuItem, FormControl, Select } from "@mui/material";
 import { connect } from "react-redux";
 import { setMode } from "../../redux/actions";
 
-const ModeComponent = ({ modes, setMode }) => {
-  const [gameMode, setGameMode] = useState("");
+const ModeComponent = ({ modes, setMode, currentMode }) => {
+
   const modeHandler = (event) => {
-    const modeObj = event.target.value;
-    modeObj && setGameMode(modeObj);
     const currentMode = {
-      name: modeObj.name,
-      field: modeObj.field,
-    };
-    setMode(currentMode);
+      cellsNum: event.target.value,
+    }
+    currentMode && setMode(currentMode);
   };
 
   return (
@@ -22,31 +19,35 @@ const ModeComponent = ({ modes, setMode }) => {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={gameMode}
+          value={currentMode.cellsNum}
           label="Mode"
           onChange={modeHandler}
         >
-          {modes.map((mode) => (
-            <MenuItem key={mode.name} value={mode}>
-              {mode.name}
+          {modes.map((m) => (
+            <MenuItem key={m.name} value={m.cellsNum}>
+              {m.name}
             </MenuItem>
           ))}
+   
+  
         </Select>
       </FormControl>
     </Box>
   );
 };
 
-const mapStateToProps = (state) => ({
-  modes: state.app.modes,
+const mapStateToProps = ({app}) => ({
+  modes: app.modes,
+  currentMode: app.currentMode,
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setMode: (mode) => {
-      dispatch(setMode(mode));
+    setMode: (currentMode) => {
+      dispatch(setMode(currentMode));
     },
   };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModeComponent);
+

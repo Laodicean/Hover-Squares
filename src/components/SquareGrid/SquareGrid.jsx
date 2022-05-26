@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 const GRID_WIDTH = 500;
 
 
-const SquareGrid = ({ handleMouseOver, CalculateRowsAndCols, mode }) => {
-  const squareArray = Array.from(Array(mode.field * mode.field), () => ({ value: 0 }));
+const SquareGrid = ({ handleMouseOver, CalculateRowsAndCols, currentMode }) => {
+  const squareArray = Array.from(Array(currentMode.cellsNum * currentMode.cellsNum), () => ({ value: 0 }));
 
   return (
     <div className={styles.wrapper} style={{width:GRID_WIDTH}}>
@@ -14,8 +14,8 @@ const SquareGrid = ({ handleMouseOver, CalculateRowsAndCols, mode }) => {
         <Square
           key={i}
           index={i}
-          cellSize={(GRID_WIDTH / mode.field)}
-          {...CalculateRowsAndCols(i, mode.field)}
+          cellSize={(GRID_WIDTH / currentMode.cellsNum)}
+          {...CalculateRowsAndCols(i, currentMode.cellsNum)}
           handleMouseOver={handleMouseOver}
         />
       ))}
@@ -24,7 +24,7 @@ const SquareGrid = ({ handleMouseOver, CalculateRowsAndCols, mode }) => {
 };
 
 const mapStateToProps = (state) => ({
-  mode: state.app.mode,
+  currentMode: state.app.currentMode,
 });
 
 

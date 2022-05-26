@@ -14,7 +14,7 @@ const CalculateRowsAndCols = (index, colsQuantity) => ({
 });
 
 
-const SquareApp = ({setModes, mode}) => {
+const SquareApp = ({setModes, currentMode}) => {
 
   const [activeSquares, setActiveSquares] = useState([]);
 
@@ -22,7 +22,7 @@ const SquareApp = ({setModes, mode}) => {
     e.target.classList.toggle(styles.active);
 
     setActiveSquares(
-      [...activeSquares, CalculateRowsAndCols(i, mode.field)].reduce((acc, cur) => {
+      [...activeSquares, CalculateRowsAndCols(i, currentMode.cellsNum)].reduce((acc, cur) => {
         const ind = acc.findIndex(
           (el) => el.curRow === cur.curRow && el.curCol === cur.curCol
         );
@@ -43,7 +43,8 @@ const SquareApp = ({setModes, mode}) => {
         return response.json();
       })
       .then((data) => {
-        setModes(data);
+        const mappedArr = data.map(el => ({name: el.name, cellsNum: el.field}))
+        setModes(mappedArr);
       });
   }, [setModes]);
 
@@ -71,9 +72,9 @@ const SquareApp = ({setModes, mode}) => {
 };
 
 
-const mapStateToProps = (state) => ({
-  modes: state.app.modes,
-  mode: state.app.mode
+const mapStateToProps = ({app}) => ({
+  modes: app.modes,
+  currentMode: app.currentMode
 });
 
 const mapDispatchToProps = (dispatch) => {
