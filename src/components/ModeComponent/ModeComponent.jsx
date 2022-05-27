@@ -3,11 +3,12 @@ import { Box, InputLabel, MenuItem, FormControl, Select } from "@mui/material";
 import { connect } from "react-redux";
 import { setMode } from "../../redux/actions";
 
-const ModeComponent = ({ modes, setMode, currentMode }) => {
+const ModeComponent = ({ modes, setMode, currentMode, clearHistory }) => {
 
-  const modeHandler = (event) => 
+  const modeHandler = (event) => {
+    clearHistory()
     event.target.value && setMode({cellsNum: event.target.value});
-
+  }
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>

@@ -1,4 +1,13 @@
-.squareEl {
+
+
+.activeCell {
+  background-color:cornflowerblue;
+  box-sizing: border-box;
+  border: 1px solid #000;
+}
+
+.notActiveCell {
+  background-color: antiquewhite;
   box-sizing: border-box;
   border: 1px solid #000;
 }

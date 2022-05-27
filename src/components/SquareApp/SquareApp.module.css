@@ -1,8 +1,13 @@
 .active {
-    background-color: cornflowerblue;
+  background-color: cornflowerblue;
 }
 .wrapper {
-    width: 800px !important;
-    margin: 0 auto !important;
+  width: 800px !important;
+  margin: 0 auto !important;
 }
 
+.btn {
+  margin-top: 10px !important;
+  width: 100px;
+  height: 40px;
+}

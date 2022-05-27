@@ -8,34 +8,40 @@ import { connect } from "react-redux";
 import { setModes } from "../../redux/actions";
 import styles from "./SquareApp.module.css";
 
-const CalculateRowsAndCols = (index, colsQuantity) => ({
+const calculateRowsAndCols = (index, colsQuantity) => ({
   curRow: Math.floor(index / colsQuantity + 1),
   curCol: (index % colsQuantity) + 1,
+  index,
 });
 
-
-const SquareApp = ({setModes, currentMode}) => {
-
+const SquareApp = ({ setModes, currentMode }) => {
+  const [gameStarted, setGameStarted] = useState(false);
   const [activeSquares, setActiveSquares] = useState([]);
 
   const handleMouseOver = (i) => (e) => {
-    e.target.classList.toggle(styles.active);
-
     setActiveSquares(
-      [...activeSquares, CalculateRowsAndCols(i, currentMode.cellsNum)].reduce((acc, cur) => {
-        const ind = acc.findIndex(
-          (el) => el.curRow === cur.curRow && el.curCol === cur.curCol
-        );
-        if (ind === -1) {
-          acc.push(cur);
-        } else {
-          acc.splice(ind, 1);
-        }
+      [...activeSquares, calculateRowsAndCols(i, currentMode.cellsNum)].reduce(
+        (acc, cur) => {
+          const ind = acc.findIndex(
+            (el) => el.curRow === cur.curRow && el.curCol === cur.curCol
+          );
+          if (ind === -1) {
+            acc.push(cur);
+          } else {
+            acc.splice(ind, 1);
+          }
 
-        return acc;
-      }, [])
+          return acc;
+        },
+        []
+      )
     );
   };
+
+  const clearHistory = () => {
+    setActiveSquares([])
+  }
+  
 
   useEffect(() => {
     fetch("https://demo7919674.mockable.io/")
@@ -43,7 +49,10 @@ const SquareApp = ({setModes, currentMode}) => {
         return response.json();
       })
       .then((data) => {
-        const mappedArr = data.map(el => ({name: el.name, cellsNum: el.field}))
+        const mappedArr = data.map((el) => ({
+          name: el.name,
+          cellsNum: el.field,
+        }));
         setModes(mappedArr);
       });
   }, [setModes]);
@@ -51,30 +60,34 @@ const SquareApp = ({setModes, currentMode}) => {
   return (
     <Grid container spacing={2} className={styles.wrapper}>
       <Grid item xs={10}>
-        <ModeComponent />
+        <ModeComponent clearHistory={clearHistory} />
       </Grid>
       <Grid item xs={2}>
-        <Button variant="contained">
+        <Button variant="contained" onClick={() => setGameStarted(true)} className={styles.btn}>
           Start
         </Button>
       </Grid>
-      <Grid item xs={8}>
-        <SquareGrid
-          handleMouseOver={handleMouseOver}
-          CalculateRowsAndCols={CalculateRowsAndCols}
-        />
-      </Grid>
-      <Grid item xs={4}>
-        <DisplayHoverSquares activeSquares={activeSquares} />
-      </Grid>
+      {gameStarted ? (
+        <>
+          <Grid item xs={8}>
+            <SquareGrid
+              activeSquares={activeSquares}
+              handleMouseOver={handleMouseOver}
+              calculateRowsAndCols={calculateRowsAndCols}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <DisplayHoverSquares activeSquares={activeSquares} />
+          </Grid>
+        </>
+      ) : null}
     </Grid>
   );
 };
 
-
-const mapStateToProps = ({app}) => ({
+const mapStateToProps = ({ app }) => ({
   modes: app.modes,
-  currentMode: app.currentMode
+  currentMode: app.currentMode,
 });
 
 const mapDispatchToProps = (dispatch) => {

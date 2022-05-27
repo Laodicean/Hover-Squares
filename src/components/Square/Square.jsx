@@ -2,11 +2,14 @@ import React from "react";
 import styles from "./Square.module.css";
 
 
-const Square = ({ index, handleMouseOver, cellSize }) => {
-  return (
-    <div style={{width: cellSize, height:cellSize}} className={styles.squareEl} onMouseEnter={handleMouseOver(index)}></div>
-    
+const Square = React.memo(({ index, handleMouseOver, cellSize, isActive = false}) => {
+    return (
+      <div style={{width: cellSize, height: cellSize}} 
+        className={`${isActive !== -1 ? styles.activeCell : styles.notActiveCell}`} 
+        onMouseEnter={handleMouseOver(index)}>
+      </div>
   );
-};
+});
+
 
 export default (Square);
