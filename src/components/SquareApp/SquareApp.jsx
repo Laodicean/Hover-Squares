@@ -7,6 +7,7 @@ import { Button, Grid } from "@mui/material";
 import { connect } from "react-redux";
 import { setModes } from "../../redux/actions";
 import styles from "./SquareApp.module.css";
+import { useCallback } from "react";
 
 const calculateRowsAndCols = (index, colsQuantity) => ({
   curRow: Math.floor(index / colsQuantity + 1),
@@ -18,7 +19,7 @@ const SquareApp = ({ setModes, currentMode }) => {
   const [gameStarted, setGameStarted] = useState(false);
   const [activeSquares, setActiveSquares] = useState([]);
 
-  const handleMouseOver = (i) => (e) => {
+  const handleMouseOver = useCallback((i) => (e) => {
     setActiveSquares(
       [...activeSquares, calculateRowsAndCols(i, currentMode.cellsNum)].reduce(
         (acc, cur) => {
@@ -36,7 +37,9 @@ const SquareApp = ({ setModes, currentMode }) => {
         []
       )
     );
-  };
+  }, [activeSquares, currentMode.cellsNum]);
+   
+
 
   const clearHistory = () => {
     setActiveSquares([])
@@ -44,7 +47,7 @@ const SquareApp = ({ setModes, currentMode }) => {
   
 
   useEffect(() => {
-    fetch("https://demo7919674.mockable.io/")
+    fetch("https://demo7919674.mockabdle.io/")
       .then((response) => {
         return response.json();
       })
@@ -54,6 +57,9 @@ const SquareApp = ({ setModes, currentMode }) => {
           cellsNum: el.field,
         }));
         setModes(mappedArr);
+      })
+      .catch((error) => {
+        console.error('Ошибка:', error);
       });
   }, [setModes]);
 
