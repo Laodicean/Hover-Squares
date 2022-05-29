@@ -47,7 +47,7 @@ const SquareApp = ({ setModes, currentMode }) => {
   
 
   useEffect(() => {
-    fetch("https://demo7919674.mockabdle.io/")
+    fetch("http://demo7919674.mockable.io/")
       .then((response) => {
         return response.json();
       })
