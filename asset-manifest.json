@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Hover-Squares/static/css/main.c872cca5.css",
-    "main.js": "/Hover-Squares/static/js/main.e578bbba.js",
+    "main.js": "/Hover-Squares/static/js/main.57f9e16a.js",
     "static/js/787.8f8bee16.chunk.js": "/Hover-Squares/static/js/787.8f8bee16.chunk.js",
     "index.html": "/Hover-Squares/index.html",
     "main.c872cca5.css.map": "/Hover-Squares/static/css/main.c872cca5.css.map",
-    "main.e578bbba.js.map": "/Hover-Squares/static/js/main.e578bbba.js.map",
+    "main.57f9e16a.js.map": "/Hover-Squares/static/js/main.57f9e16a.js.map",
     "787.8f8bee16.chunk.js.map": "/Hover-Squares/static/js/787.8f8bee16.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c872cca5.css",
-    "static/js/main.e578bbba.js"
+    "static/js/main.57f9e16a.js"
   ]
 }
